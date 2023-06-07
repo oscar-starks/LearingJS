@@ -35,13 +35,15 @@ catch{
 console.log("there was an error")
 }
 
-const my_json = {
+var my_json = {
     first_name: 'John',
     last_name: 'Doe',
     age: 30
 }
 console.log(my_json["first_name"])
 my_json.age = 60
+delete my_json.last_name
+
 
 console.log(my_json)
 
@@ -51,4 +53,14 @@ var places = ["goats", "people"]
 console.log(places[0])
 
 var x = 5 + 10 + 1;
-console.log(typeof x); // 16
+console.log(typeof x, x); // 16
+
+console.log(4 +"5")
+
+let my_var = (5 > 7)? true: false
+console.log(my_var)
+
+var variable = 3
+console.log(variable)
+
+// var my_json = 
