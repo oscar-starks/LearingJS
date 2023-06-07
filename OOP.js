@@ -16,4 +16,32 @@ class MyClass{
 
 const my_object = new MyClass("Jefferson", "John","Jason", 50);
 var statement = my_object.ageMethod();
-console.log(statement);
+// console.log(statement);
+
+/*
+this section is for inheritance classes
+*/
+class Car {
+    constructor(brand) {
+      this.carname = brand;
+    }
+    test_function() {
+      return 'I have a ' + this.carname;
+    }
+  }
+
+var car_instance = new Car("benz");
+console.log(car_instance.test_function());
+  
+class Model extends Car {
+    constructor(brand, mod) {
+        super(brand);
+        this.model = mod;
+    }
+    show_this() {
+        return this.test_function() + ', it is a ' + this.model;
+    }
+}
+
+let myCar = new Model("Ford", "Mustang");
+console.log(myCar.show_this());
