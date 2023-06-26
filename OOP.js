@@ -30,6 +30,26 @@ class Car {
     }
   }
 
+//   getters and setters
+
+class NewCar {
+    constructor(brand) {
+      this.carname = brand;
+    }
+    get cnam() {
+      return this.carname;
+    }
+    set cnam(x) {
+      this.carname = x;
+    }
+  }
+  
+const car_object = new Car("Ford");
+console.log(car_object.cnam);
+
+
+// inheritance
+ 
 var car_instance = new Car("benz");
 console.log(car_instance.test_function());
   
@@ -45,3 +65,6 @@ class Model extends Car {
 
 let myCar = new Model("Ford", "Mustang");
 console.log(myCar.show_this());
+
+
+ 

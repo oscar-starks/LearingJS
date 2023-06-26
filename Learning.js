@@ -64,3 +64,24 @@ var variable = 3
 console.log(variable)
 
 // var my_json = 
+
+function hello(){
+    console.log("hello")
+}
+hello()
+
+// setTimeout(function(){
+//     hello();
+// },3000);
+
+counter = 0
+let timer = setInterval(function(){
+    counter += 2;
+    console.log(counter, " seconds are gone");
+
+    if (counter >= 6){
+        console.log("the time has elapsed");
+        clearInterval(timer);
+    }
+
+}, 2000)
