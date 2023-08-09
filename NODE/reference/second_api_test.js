@@ -13,7 +13,7 @@ fetch(url, {
 
   .then(response => {
     return response.json().then(data => {
-      return Object.assign({ status_code: response.status },(data))
+      return Object.assign({ status_code: response.status },data)
     });
   })
 
