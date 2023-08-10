@@ -2,8 +2,8 @@ const fetch = require('node-fetch');
 
 const url = 'http://localhost:8000/accounts/login/';
 const payload = {
-  email:"test@gmail.com",
-  password:"test",
+  email:"admin@gmail.com",
+  password:"admin",
 }
 
 fetch(url, {
