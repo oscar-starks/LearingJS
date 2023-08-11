@@ -1,37 +1,23 @@
-// async function fetchData() {
-//     try {
-//       const response = await fetch('https://easyaccess.com.ng/api/data.php');
-      
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-  
-//       const data = await response.json();
-//       console.log(data);
+fetch = require("node-fetch")
 
-//     } catch (error) {
-//       console.error('Error:', error);
-//     }
-//   }
-  
-//   fetchData();
+const url = "http://localhost:8000/dashboard/data/regular/"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTE1ODk0MTUsInVzZXJfaWQiOiI1MDRiMDlmZi1mZGZiLTQ2ZmEtOTRkYy0yZWRlYjFjMzU2M2IifQ.TVU_joTWUg6tVFai4Sw74YIfd8ymIS3umO8exMFg-VE"
+const headers = {
+    "Authorization": `Bearer ${token}`,
+}
+const payload = {
+    network: "airtel",
+    mobile_number:"09017741269",
+    data_plan:"5GB"
+}
 
+async function fetch_endpoint(){
+    result  = await fetch(url, {
+        headers: headers,
+        body: new URLSearchParams(payload)
 
-const response = await fetch('https://easyaccess.com.ng/api/data.php');
-console.log(response)      
+    })
+    console.log(result.json())
+}
 
-//   import requests
-
-//   url = "https://easyaccess.com.ng/api/data.php"
-//   payload = {
-//       'network': '01',
-//       'mobileno': '09017741269',
-//       'dataplan': 51,
-//   }
-//   headers = {"AuthorizationToken": "4a1b9f809037d68c98d0695dc5638fa6"}
-  
-//   response = requests.post(url, data=payload, headers=headers)
-  
-//   print(response.text)
-  
-  
+fetch_endpoint()
