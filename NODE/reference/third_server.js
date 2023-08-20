@@ -11,9 +11,9 @@ const server = http.createServer((req, res) => {
         res.end(`this is the ${req.url} page`);
     }
 
-
 });
 
 server.listen(7000, (err, res) => {
     console.log("the server is listening");
+    console.error("chicken server");
 });

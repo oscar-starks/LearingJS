@@ -77,7 +77,7 @@ hello()
 counter = 0
 let timer = setInterval(function(){
     counter += 2;
-    console.log(counter, " seconds are gone");
+    console.log(`${counter} seconds are gone`);
 
     if (counter >= 6){
         console.log("the time has elapsed");
@@ -85,3 +85,5 @@ let timer = setInterval(function(){
     }
 
 }, 2000)
+
+// module.exports.timer = timer;

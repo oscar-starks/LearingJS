@@ -50,6 +50,7 @@ server.use(function(err, req, res, next) {
     console.log(err.stack);
     res.send(500).send(err.message);
 })
+kjern
 
 server.listen(PORT,(err, server) => {
     console.log(`server listening on ${PORT}`);
