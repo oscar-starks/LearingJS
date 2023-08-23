@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 8000;
 
 const whitelist = ['http://localhost:8000', 'https://www.google.com']
 
+
 const corsOptions = {
     origin:(web_origin, callback) =>{
         console.log(web_origin)
@@ -14,6 +15,8 @@ const corsOptions = {
             // second argument for the callback indicates that everything went well
             callback(null, true);
         }else {
+            // res.send("origin not allowed!");
+            // callback(null, true);
             callback(new Error('Origin not allowed!'));
         }
     },
@@ -36,12 +39,11 @@ server.use(express.urlencoded({ extended:false}));
 // this is a middleware for json parsing
 server.use(express.json());
 // THIS IS for serving static files
-server.use(express.static(path.join(__dirname,'static/')));
+server.use('/',express.static(path.join(__dirname,'static/')));
 
-server.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'index.html'));
+server.use('/subdir', require('./routes/subdir.js'));
 
-});
+server.set('views',path.join(__dirname, 'src'))
 
 server.get('/about/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'about.html'));
@@ -58,12 +60,14 @@ server.get('/chaining/', (req, res, next) => {
     res.send("the chaining succeeded");
 });
 
-server.get('*/', (req, res) => {
+// server.get('*/', (req, res) => {
+server.all('*', (req, res) => {
+
     res.status(404).sendFile(path.join(__dirname, 'src', '404.html'));
 });
 
 server.use(function(err, req, res, next) {
-    console.log(err.stack);
+    console.error(err.stack);
     res.send(500).send(err.message);
 })
 
