@@ -3,7 +3,7 @@ const express = require('express');
 const server = express();
 const cors = require('cors');
 const PORT = process.env.PORT || 8000;
-const corsOptions = require('./cors.js');
+const corsOptions = require('../requirements/cors.js');
 var bodyParser = require('body-parser');
 
 
@@ -24,19 +24,19 @@ server.use('/',express.static(path.join(__dirname,'static/')));
 
 
 
-server.use('/register', require('./routes/register'));
+server.use('/auth', require('../routes/user_management.js'));
 
-server.use('/subdir', require('./routes/subdir.js'));
+server.use('/subdir', require('../routes/subdir.js'));
 
-server.set('views',path.join(__dirname, 'src'))
+server.set('views',path.join(__dirname,'..', 'src'))
 
 server.get('/about/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'about.html'));
+    res.sendFile(path.join(__dirname, '..','src', 'about.html'));
 });
 
 server.post('/chicken/', (req, res) => {
     console.log(req.body)
-    res.sendFile(path.join(__dirname, 'src', 'about.html'));
+    res.sendFile(path.join(__dirname, '..','src', 'about.html'));
 });
 
 server.get('/redirect/', (req, res) => {
@@ -53,7 +53,7 @@ server.get('/chaining/', (req, res, next) => {
 // server.get('*/', (req, res) => {
 server.all('*', (req, res) => {
 
-    res.status(404).sendFile(path.join(__dirname, 'src', '404.html'));
+    res.status(404).sendFile(path.join(__dirname,'..', 'src', '404.html'));
 });
 
 server.use(function(err, req, res, next) {

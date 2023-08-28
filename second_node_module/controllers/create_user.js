@@ -8,7 +8,7 @@ server.use(express.json()); // Add this line to parse request bodies as JSON
 const PORT = process.env.PORT || 8000;
 
 const UserDB = {
-    users: require('./models/users.json'),
+    users: require('../models/users.json'),
     setUsers: function(data) {
         this.users = data;
     }
@@ -41,8 +41,7 @@ const handleNewUser = async (req, res) => {
         console.log(UserDB.users);
         res.status(201).json({ "message": "Success, new user created" });
     } catch (e) {
-        console.error(e);
-        res.status(500).json({ "message": "Internal server error" });
+        res.status(500).json({ "message": "Internal server error" , "error": e });
     }
 };
 
