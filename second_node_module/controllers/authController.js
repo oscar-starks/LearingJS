@@ -1,3 +1,9 @@
+const path = require('path');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config({path: path.join(__dirname, '..', '.env')});
+const fsPromises = require('fs').promises;
+
 const UserDB = {
     users: require('../models/users.json'),
     setUsers: function(data) {
@@ -5,11 +11,10 @@ const UserDB = {
     }
 };
 
-const bcrypt = require('bcrypt');
 
 const handleLogin = async function(req, res) {
 
-    try {
+    // try {
         const { user, password } = req.body;
 
         if (!user || !password) {
@@ -23,18 +28,39 @@ const handleLogin = async function(req, res) {
         }
         else{
             match = await bcrypt.compare(password, userExists.password);
-            console.log(match);
-            if (match) return res.json({ "message": "password matches" });
-            else return res.status(400).json({ "message": "password mismatch" });
+            if (match) {
+                access_secret_token = process.env.ACCESS_TOKEN_SECRET
+                refresh_seret_token = process.env.REFRESH_TOKEN_SECRET
+
+                const accessToken = jwt.sign(
+                    { "username": user },
+                    process.env.ACCESS_TOKEN_SECRET,
+                    {expiresIn: '50s'}
+                )
+
+                const refreshToken = jwt.sign(
+                    { "username": user },
+                    process.env.REFRESH_TOKEN_SECRET,
+                    {expiresIn: '200s'}
+                )
+
+                return res.json({ "message": "password matches", "data":{
+                    "access_token": accessToken,
+                    "refresh_token": refreshToken
+                }
+                });
+
+            }
+                else return res.status(400).json({ "message": "password mismatch" });
 
         }
 
 
 
-    }catch(e) {
-        res.status(500).json({ "message": "Internal server error" });
+    // }catch(e) {
+    //     res.status(500).json({ "message": "Internal server error" });
 
-        }
+    //     }
 
 };
 
