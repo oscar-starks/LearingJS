@@ -14,7 +14,7 @@ const UserDB = {
 
 const handleLogin = async function(req, res) {
 
-    // try {
+    try {
         const { user, password } = req.body;
 
         if (!user || !password) {
@@ -57,10 +57,10 @@ const handleLogin = async function(req, res) {
 
 
 
-    // }catch(e) {
-    //     res.status(500).json({ "message": "Internal server error" });
+    }catch(e) {
+        res.status(500).json({ "message": "Internal server error" });
 
-    //     }
+        }
 
 };
 
