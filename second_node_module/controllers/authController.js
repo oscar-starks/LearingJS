@@ -21,13 +21,13 @@ const handleLogin = async function(req, res) {
             return res.status(400).json({ "message": "Data must contain username and password" });
         }
 
-        const userExists = UserDB.users.find(person => person.username === user);
+        const FoundUser = UserDB.users.find(person => person.username === user);
 
-        if (!userExists) {
+        if (!FoundUser) {
             return res.status(401).json({ "message": "Username does not exist" });
         }
         else{
-            match = await bcrypt.compare(password, userExists.password);
+            match = await bcrypt.compare(password, FoundUser.password);
             if (match) {
                 access_secret_token = process.env.ACCESS_TOKEN_SECRET
                 refresh_seret_token = process.env.REFRESH_TOKEN_SECRET
@@ -43,10 +43,20 @@ const handleLogin = async function(req, res) {
                     process.env.REFRESH_TOKEN_SECRET,
                     {expiresIn: '200s'}
                 )
+                const otherUsers = UserDB.users.filter(person => person.username !== user)
+                const currentUser = {...FoundUser, refreshToken};
+                UserDB.setUsers([...otherUsers, currentUser])
+
+                await fsPromises.writeFile(
+                    path.join(__dirname, '..', 'models', 'users.json'),
+                    JSON.stringify(UserDB.users)
+                )
+
+                res.cookie('jwt', refreshToken, {httpOnly: true, maxAge:24 * 60 * 60 * 1000})
 
                 return res.json({ "message": "password matches", "data":{
                     "access_token": accessToken,
-                    "refresh_token": refreshToken
+                    // "refresh_token": refreshToken
                 }
                 });
 
